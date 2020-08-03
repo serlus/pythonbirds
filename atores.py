@@ -125,7 +125,7 @@ class Passaro(Ator):
         :param tempo: tempo de jogo a ser calculada a posição
         :return: posição x, y
         """
-        if self.foi_lancado():
+        if self._esta_voando():
             delta_t = tempo - self._tempo_de_lancamento
             self._calcular_posicao_vertical(delta_t)
             self._calcular_posicao_horizontal(delta_t)
@@ -156,6 +156,9 @@ class Passaro(Ator):
         angulo_radianos = math.radians(self._angulo_de_lancamento)
         x_atual += self.velocidade_escalar * delta_t * math.cos(angulo_radianos)
         self.x = x_atual
+
+    def _esta_voando(self):
+        return self.foi_lancado() and self.status == ATIVO
 
 class PassaroAmarelo(Passaro):
     _caracter_ativo = 'A'
